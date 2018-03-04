@@ -6,9 +6,15 @@ const double PI = 3.14159265;
 
 struct Complex
 {
-	double real;
-	double image;
+	long double real = 0;
+	long double image = 0;
 };
+
+
+double module_comlex(struct Complex value)
+{
+	return sqrt(value.real*value.real + value.image*value.image);
+}
 
 int main()
 {
@@ -33,10 +39,10 @@ int main()
 
 	for (int i = 0; i < count_N; i++)
 	{
-		std::cout << "Please input value " << "x(" << i << ")" << std::endl;
+		std::cout << std::endl << "Please input value " << "x(" << i << ")" << std::endl;
 		std::cout << "Real:";
 		std::cin >> x_n[i].real;
-		std::cout << std::endl << "Image:";
+		std::cout << "Image:";
 		std::cin >> x_n[i].image;
 	}
 
@@ -46,9 +52,29 @@ int main()
 	{
 		for (int j = 0; j < count_N; j++)
 		{
-			X_k[i].real += x_n[i].real * cos(2 * PI*i*j / count_N);
-			X_k[i].image += -1*x_n[i].real * sin(2 * PI*i*j / count_N);
+			if(x_n[j].image==0)
+			{
+				X_k[i].real += x_n[j].real * cos(2 * PI*i*j / count_N);
+				X_k[i].image += -1 * x_n[j].real * sin(2 * PI*i*j / count_N);
+			}
+			else
+			{
+				X_k[i].real += x_n[j].real * cos(2 * PI*i*j / count_N);
+				X_k[i].image += x_n[j].image * cos(2 * PI*i*j / count_N);
+				X_k[i].image += -1 * x_n[j].image * sin(2 * PI*i*j / count_N);
+			}
 		}
 	}
+
+	for (int i = 0; i < count_N; i++)
+	{
+		std::cout << "X(" << i << ")=" << X_k[i].real;
+		if (X_k[i].image > 0) 
+			std::cout <<" + j*"<< X_k[i].image;
+		else if(X_k[i].image < 0)
+			std::cout << " - j*" << -1*X_k[i].image;
+		std::cout <<"   module(X(" << i << ")=" << module_comlex(X_k[i]) << std::endl;
+	}
+	_getch();
 	return 0;
 }
