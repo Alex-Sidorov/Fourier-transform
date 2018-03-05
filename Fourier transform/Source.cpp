@@ -139,7 +139,7 @@ void direct_Fourier_transform(Complex *x_n, Complex *X_k, int count_N)
 			{
 				X_k[i].real += x_n[j].real * cos(2 * PI*i*j / count_N);
 				X_k[i].image += -1 * x_n[j].real * sin(2 * PI*i*j / count_N);
-				X_k[i].real += -1 * x_n[j].image * sin(2 * PI*i*j / count_N);
+				X_k[i].real +=  x_n[j].image * sin(2 * PI*i*j / count_N);
 				X_k[i].image += x_n[j].image * cos(2 * PI*i*j / count_N);
 			}
 		}
@@ -163,7 +163,7 @@ void reverse_Fourier_transform(Complex *x_n, Complex *X_k, int count_N)
 			{
 				x_n[i].real += X_k[j].real * cos(2 * PI*i*j / count_N);
 				x_n[i].image += X_k[j].real * sin(2 * PI*i*j / count_N);
-				x_n[i].real += X_k[j].image * sin(2 * PI*i*j / count_N);
+				x_n[i].real += -1 * X_k[j].image * sin(2 * PI*i*j / count_N);
 				x_n[i].image += X_k[j].image * cos(2 * PI*i*j / count_N);
 			}
 		}
